@@ -5,7 +5,7 @@ class UserItem extends React.Component {
     return(
       <li className="table-row">
         <div className="col col-1">{this.props.user.name}</div>
-        <div className="col col-2">{this.props.user.username}</div>
+        <div className="col col-2">{this.props.user.phone}</div>
         <div className="col col-3">{this.props.user.email}</div>
         <div className="col col-4">
           <button

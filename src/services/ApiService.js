@@ -4,7 +4,7 @@ const getUserList = () => {
     .then(response => response.json());
 }
 
-const createUser = (user) => {
+const create = (user) => {
   return fetch('https://jsonplaceholder.typicode.com/users', {
     method: 'POST',
     body: JSON.stringify(user),
@@ -15,7 +15,7 @@ const createUser = (user) => {
     .then((response) => response.json());
 }
 
-const updateUser = (user) => {
+const update = (user) => {
   return fetch(`https://jsonplaceholder.typicode.com/users/${user.id}`, {
     method: 'PUT',
     body: JSON.stringify(user),
@@ -35,7 +35,7 @@ const deleteUser = (id) => {
 
 export {
   getUserList,
-  createUser,
-  updateUser,
+  create,
+  update,
   deleteUser
 }

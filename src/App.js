@@ -2,7 +2,7 @@ import React from "react";
 import './App.css';
 import UserList from "./components/UserList";
 import Form from "./components/Form";
-import {getUserList, createUser, updateUser, deleteUser} from "./services/ApiService";
+import {getUserList, create, update, deleteUser} from "./services/ApiService";
 
 class App extends React.Component {
   constructor(props) {
@@ -10,8 +10,7 @@ class App extends React.Component {
 
     this.state = {
       userList: [],
-      selectedUser: null,
-      isSaving: false
+      selectedUser: null
     }
 
   }
@@ -32,20 +31,19 @@ class App extends React.Component {
   }
 
 
-  saveUser = (data) => {
-    this.setState({isSaving: true});
+  updateUser = (data) => {
     if (this.state.selectedUser) {
 
       this.setState({
         selectedUser: {
           ...this.state.selectedUser,
           name: data.name,
-          username: data.username,
+          phone: data.phone,
           email: data.email
         }
       });
 
-      updateUser(this.state.selectedUser)
+      update(this.state.selectedUser)
         .then((json) => {
           this.setState({
             userList: this.state.userList.map(user =>
@@ -55,26 +53,24 @@ class App extends React.Component {
             )
           }, () => {
             this.setState({
-              selectedUser: null,
-              isSaving: false
+              selectedUser: null
             });
           });
         });
 
-    } else {
-
-      createUser(data)
-        .then((json) => {
-          this.setState({
-            userList: [
-              ...this.state.userList,
-              {...json, id: Date.now()}
-              ],
-            isSaving: false
-          });
-        });
-
     }
+  }
+
+  createUser = (data) => {
+    create(data)
+      .then((json) => {
+        this.setState({
+          userList: [
+            ...this.state.userList,
+            {...json, id: Date.now()}
+          ]
+        });
+      });
   }
 
   deleteUser = (id) => {
@@ -105,8 +101,8 @@ class App extends React.Component {
         <Form
           user={this.state.selectedUser}
           clearSelectedUser={this.clearSelectedUser}
-          saveUser={this.saveUser}
-          isSaving={this.state.isSaving}
+          updateUser={this.updateUser}
+          createUser={this.createUser}
         />
       </div>
     );

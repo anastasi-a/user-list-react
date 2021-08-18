@@ -7,21 +7,24 @@ class Form extends React.Component {
 
     this.state = {
       name: "",
-      username: "",
+      phone: "",
       email: ""
     }
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.user && (!prevProps.user || prevProps.user.id !== this.props.user.id)) {
-      this.updateFormState(this.props.user.name, this.props.user.username, this.props.user.email);
+      this.updateFormState(this.props.user.name, this.props.user.phone, this.props.user.email);
+    }
+    if (prevProps.user && !this.props.user) {
+      this.updateFormState("", "", "");
     }
   }
 
-  updateFormState = (name, username, email) => {
+  updateFormState = (name, phone, email) => {
     this.setState({
       name: name,
-      username: username,
+      phone: phone,
       email: email
     });
   }
@@ -37,10 +40,14 @@ class Form extends React.Component {
     this.updateFormState("", "", "");
   }
 
-  saveUser = () => {
-    if (this.state.name.trim() && this.state.username.trim() && this.state.email.trim()) {
-      this.props.saveUser(this.state);
-      this.updateFormState("", "", "");
+  saveUser = (isNew) => {
+    if (this.state.name.trim() && this.state.phone.trim() && this.state.email.trim()) {
+      if (isNew) {
+        this.props.createUser(this.state);
+        this.updateFormState("", "", "");
+      } else {
+        this.props.updateUser(this.state);
+      }
     }
   }
 
@@ -58,8 +65,11 @@ class Form extends React.Component {
           )
         }
         <div className="button-wrapper">
-          <div className='lf--submit' onClick={this.saveUser}>
-            {this.props.isSaving ? "SAVING..."  : "SAVE"}
+          <div className='lf--submit' onClick={() => {this.saveUser(false)}}>
+            SAVE
+          </div>
+          <div className='lf--submit' onClick={() => {this.saveUser(true)}}>
+            CREATE
           </div>
           <div className='lf--submit' onClick={this.clearForm}>
             CLEAR

@@ -8,7 +8,7 @@ class UserList extends React.Component {
         <ul className="responsive-table">
           <li className="table-header">
             <div className="col col-1">Name</div>
-            <div className="col col-2">Username</div>
+            <div className="col col-2">Phone</div>
             <div className="col col-3">Email</div>
             <div className="col col-4"> </div>
           </li>
