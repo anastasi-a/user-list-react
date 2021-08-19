@@ -33,22 +33,17 @@ class App extends React.Component {
 
   updateUser = (data) => {
     if (this.state.selectedUser) {
-
-      this.setState({
-        selectedUser: {
-          ...this.state.selectedUser,
-          name: data.name,
-          phone: data.phone,
-          email: data.email
-        }
-      });
-
-      update(this.state.selectedUser)
+      update(data, this.state.selectedUser.id)
         .then((json) => {
           this.setState({
             userList: this.state.userList.map(user =>
               user.id === this.state.selectedUser.id ?
-                {...this.state.selectedUser} :
+                {
+                  ...user,
+                  name: data.name,
+                  phone: data.phone,
+                  email: data.email
+                } :
                 user
             )
           }, () => {
@@ -57,7 +52,6 @@ class App extends React.Component {
             });
           });
         });
-
     }
   }
 

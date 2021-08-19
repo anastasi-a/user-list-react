@@ -65,12 +65,15 @@ class Form extends React.Component {
           )
         }
         <div className="button-wrapper">
-          <div className='lf--submit' onClick={() => {this.saveUser(false)}}>
-            SAVE
-          </div>
-          <div className='lf--submit' onClick={() => {this.saveUser(true)}}>
-            CREATE
-          </div>
+          {
+            this.props.user ?
+              <div className='lf--submit' onClick={() => {this.saveUser(false)}}>
+                SAVE
+              </div> :
+              <div className='lf--submit' onClick={() => {this.saveUser(true)}}>
+                CREATE
+              </div>
+          }
           <div className='lf--submit' onClick={this.clearForm}>
             CLEAR
           </div>

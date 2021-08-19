@@ -15,8 +15,8 @@ const create = (user) => {
     .then((response) => response.json());
 }
 
-const update = (user) => {
-  return fetch(`https://jsonplaceholder.typicode.com/users/${user.id}`, {
+const update = (user, id) => {
+  return fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
     method: 'PUT',
     body: JSON.stringify(user),
     headers: {
